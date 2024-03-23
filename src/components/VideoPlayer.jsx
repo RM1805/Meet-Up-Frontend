@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { Grid, Typography, Paper, Button } from '@mui/material';
+import { Grid, Typography, Paper } from '@mui/material';
 import styled from 'styled-components';
 
 import { SocketContext } from '../Context';
@@ -25,7 +25,7 @@ const StyledVideo = styled.video`
 `;
 
 const VideoPlayer = () => {
-  const { name, callAccepted, myVideo, userVideo, callEnded, stream, call } = useContext(SocketContext);
+  const { name, callAccepted, myVideo, userVideo, callEnded, stream, audioStream, call } = useContext(SocketContext);
 
   useEffect(() => {
     if (stream && myVideo.current) {
@@ -67,5 +67,6 @@ const VideoPlayer = () => {
     </StyledVideoContainer>
   );
 };
+
 
 export default VideoPlayer;
