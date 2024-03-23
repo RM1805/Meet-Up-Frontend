@@ -39,6 +39,12 @@ const VideoPlayer = () => {
     }
   }, [callAccepted, callEnded, call.stream]);
 
+  useEffect(() => {
+    if (callAccepted && !callEnded && audioStream && myVideo.current) {
+      myVideo.current.srcObject = new MediaStream([audioStream.getAudioTracks()[0]]);
+    }
+  }, [callAccepted, callEnded, audioStream]);
+
   return (
     <StyledVideoContainer container>
       {stream && (
@@ -67,6 +73,7 @@ const VideoPlayer = () => {
     </StyledVideoContainer>
   );
 };
+
 
 
 export default VideoPlayer;
