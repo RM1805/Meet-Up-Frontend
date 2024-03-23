@@ -41,7 +41,8 @@ const VideoPlayer = () => {
 
   useEffect(() => {
     if (callAccepted && !callEnded && audioStream && myVideo.current) {
-      myVideo.current.srcObject = new MediaStream([audioStream.getAudioTracks()[0]]);
+      const combinedStream = new MediaStream([...myVideo.current.srcObject.getTracks(), ...audioStream.getTracks()]);
+      myVideo.current.srcObject = combinedStream;
     }
   }, [callAccepted, callEnded, audioStream]);
 
@@ -73,6 +74,7 @@ const VideoPlayer = () => {
     </StyledVideoContainer>
   );
 };
+
 
 
 
