@@ -20,12 +20,13 @@ const StyledPaper = styled(Paper)`
 
 const StyledVideo = styled.video`
   width: 100%;
+  height: 100%;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 `;
 
 const VideoPlayer = () => {
-  const { name, callAccepted, myVideo, userVideo, callEnded, stream, audioStream, call } = useContext(SocketContext);
+  const { name, callAccepted, myVideo, userVideo, callEnded, stream, call } = useContext(SocketContext);
 
   useEffect(() => {
     if (stream && myVideo.current) {
@@ -38,13 +39,6 @@ const VideoPlayer = () => {
       userVideo.current.srcObject = call.stream;
     }
   }, [callAccepted, callEnded, call.stream]);
-
-  useEffect(() => {
-    if (callAccepted && !callEnded && audioStream && myVideo.current) {
-      const combinedStream = new MediaStream([...myVideo.current.srcObject.getTracks(), ...audioStream.getTracks()]);
-      myVideo.current.srcObject = combinedStream;
-    }
-  }, [callAccepted, callEnded, audioStream]);
 
   return (
     <StyledVideoContainer container>
@@ -74,8 +68,5 @@ const VideoPlayer = () => {
     </StyledVideoContainer>
   );
 };
-
-
-
 
 export default VideoPlayer;
