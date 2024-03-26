@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { Grid, Typography, Paper } from '@mui/material';
 import styled from 'styled-components';
 
@@ -26,19 +26,20 @@ const StyledVideo = styled.video`
 `;
 
 const VideoPlayer = () => {
-  const { name, callAccepted, myVideo, userVideo, callEnded, stream, call } = useContext(SocketContext);
+  const { name, callAccepted, myVideo, userVideo, stream, call } = useContext(SocketContext);
+  const userVideoRef = useRef();
 
   useEffect(() => {
     if (stream && myVideo.current) {
       myVideo.current.srcObject = stream;
     }
-  }, [stream]);
+  }, [stream, myVideo]);
 
   useEffect(() => {
-    if (callAccepted && !callEnded && userVideo.current) {
-      userVideo.current.srcObject = call.stream;
+    if (callAccepted && userVideoRef.current && call.stream) {
+      userVideoRef.current.srcObject = call.stream;
     }
-  }, [callEnded, call.stream]);
+  }, [callAccepted, call.stream]);
 
   return (
     <StyledVideoContainer container>
@@ -50,11 +51,11 @@ const VideoPlayer = () => {
           </Grid>
         </StyledPaper>
       )}
-      {callAccepted && !callEnded && (
+      {callAccepted && (
         <StyledPaper>
           <Grid item xs={12} md={6}>
             <Typography variant="h5" gutterBottom style={{ color: '#333', marginBottom: '10px', textAlign: 'center' }}>{call.name || 'Name'}</Typography>
-            <StyledVideo playsInline ref={userVideo} autoPlay />
+            <StyledVideo playsInline ref={userVideoRef} autoPlay />
           </Grid>
         </StyledPaper>
       )}
