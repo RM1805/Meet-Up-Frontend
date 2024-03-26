@@ -36,39 +36,27 @@ const VideoPlayer = () => {
   }, [stream, myVideo]);
 
   useEffect(() => {
-    if (callAccepted && userVideoRef.current && call.stream) {
+    if (userVideoRef.current && call.stream) {
       userVideoRef.current.srcObject = call.stream;
     }
-  }, [callAccepted, call.stream]);
+  }, [call.stream]);
 
   return (
     <StyledVideoContainer container>
-      {stream && (
-        <StyledPaper>
-          <Grid item xs={12} md={6}>
-            <Typography variant="h5" gutterBottom style={{ color: '#333', marginBottom: '10px', textAlign: 'center' }}>{name || 'Name'}</Typography>
-            <StyledVideo playsInline muted ref={myVideo} autoPlay />
-          </Grid>
-        </StyledPaper>
-      )}
-      {callAccepted && (
-        <StyledPaper>
-          <Grid item xs={12} md={6}>
-            <Typography variant="h5" gutterBottom style={{ color: '#333', marginBottom: '10px', textAlign: 'center' }}>{call.name || 'Name'}</Typography>
-            <StyledVideo playsInline ref={userVideoRef} autoPlay />
-          </Grid>
-        </StyledPaper>
-      )}
-      {callAccepted && stream && (
-        <StyledPaper>
-          <Grid item xs={12} md={6}>
-            <Typography variant="h5" gutterBottom style={{ color: '#333', marginBottom: '10px', textAlign: 'center' }}>You are in a call with {call.name}</Typography>
-            <StyledVideo playsInline ref={myVideo} autoPlay />
-            <StyledVideo playsInline ref={userVideo} autoPlay />
-          </Grid>
-        </StyledPaper>
-      )}
-      {!stream && !callAccepted && (
+      <StyledPaper>
+        <Grid item xs={12} md={6}>
+          <Typography variant="h5" gutterBottom style={{ color: '#333', marginBottom: '10px', textAlign: 'center' }}>{name || 'Name'}</Typography>
+          <StyledVideo playsInline muted ref={myVideo} autoPlay />
+        </Grid>
+      </StyledPaper>
+      <StyledPaper>
+        <Grid item xs={12} md={6}>
+          <Typography variant="h5" gutterBottom style={{ color: '#333', marginBottom: '10px', textAlign: 'center' }}>{call.name || 'Name'}</Typography>
+          <StyledVideo playsInline ref={userVideoRef} autoPlay />
+        </Grid>
+      </StyledPaper>
+
+      {!callAccepted && (
         <StyledPaper>
           <Grid item xs={12} md={6}>
             <Typography variant="h5" gutterBottom style={{ color: '#333', marginBottom: '10px', textAlign: 'center' }}>Waiting for a call...</Typography>
