@@ -38,7 +38,7 @@ const VideoPlayer = () => {
     if (callAccepted && !callEnded && userVideo.current) {
       userVideo.current.srcObject = call.stream;
     }
-  }, [callAccepted, callEnded, call.stream]);
+  }, [callEnded, call.stream]);
 
   return (
     <StyledVideoContainer container>
