@@ -36,10 +36,10 @@ const VideoPlayer = () => {
   }, [stream, myVideo]);
 
   useEffect(() => {
-    if (userVideoRef.current && call.stream) {
+    if (callAccepted && userVideoRef.current && call.stream) {
       userVideoRef.current.srcObject = call.stream;
     }
-  }, [call.stream]);
+  }, [callAccepted, call.stream]);
 
   return (
     <StyledVideoContainer container>
@@ -51,11 +51,11 @@ const VideoPlayer = () => {
           </Grid>
         </StyledPaper>
       )}
-      {call.stream && (
+      {callAccepted && (
         <StyledPaper>
           <Grid item xs={12} md={6}>
             <Typography variant="h5" gutterBottom style={{ color: '#333', marginBottom: '10px', textAlign: 'center' }}>{call.name || 'Name'}</Typography>
-            <StyledVideo playsInline ref={userVideo} autoPlay />
+            <StyledVideo playsInline ref={userVideoRef} autoPlay />
           </Grid>
         </StyledPaper>
       )}
@@ -63,7 +63,8 @@ const VideoPlayer = () => {
         <StyledPaper>
           <Grid item xs={12} md={6}>
             <Typography variant="h5" gutterBottom style={{ color: '#333', marginBottom: '10px', textAlign: 'center' }}>You are in a call with {call.name}</Typography>
-            <StyledVideo playsInline ref={userVideoRef} autoPlay />
+            <StyledVideo playsInline ref={myVideo} autoPlay />
+            <StyledVideo playsInline ref={userVideo} autoPlay />
           </Grid>
         </StyledPaper>
       )}
